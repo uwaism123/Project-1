@@ -40,41 +40,7 @@ def validate(filename):
     return bool(VALID_PATTERN.match(filename))
 
 
-# def process():
-#     files = [f for f in os.listdir(INPUT) if os.path.isfile(os.path.join(INPUT, f))]
-#     valid, invalid = 0, 0
 
-#     for f in files:
-#         src = os.path.join(INPUT, f)
-
-#         if validate(f):
-#             # --- Extract year from DDMMYYYY ---
-#             date_part = f.split("_")[0]
-#             year = int(date_part[4:])
-
-#             # --- Archive if older than 2000 ---
-#             if year < 2000:
-#                 shutil.move(src, os.path.join(ARCHIVE, f))
-#                 logging.info(f"ARCHIVE (<2000) → archive: {f}")
-#                 valid += 1
-#                 continue  # skip rest
-
-#             ext = f.split(".")[-1].lower()
-
-#             # Get destination folder (default to PROCESSED if not listed)
-#             dest_folder = FOLDERS.get(ext, PROCESSED)
-
-#             shutil.move(src, os.path.join(dest_folder, f))
-#             logging.info(f"{ext.upper()} → {dest_folder}: {f}")
-#             valid += 1
-
-#         else:
-#             shutil.move(src, os.path.join(QUARANTINE, f))
-#             logging.warning(f"INVALID → quarantine: {f}")
-#             invalid += 1
-
-#     print(f"\n✅ Processed: {valid} | ❌ Quarantined: {invalid}")
-#     print(f"📄 Log: {log_file}")
 def process():
     files = [f for f in os.listdir(INPUT) if os.path.isfile(os.path.join(INPUT, f))]
     processed, quarantined, archived = 0, 0, 0
