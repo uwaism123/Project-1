@@ -1,6 +1,6 @@
 import json
 import os, shutil, re, logging
-#from functions import get_unique_path
+from functions import get_unique_path
 from datetime import datetime
 
 
@@ -31,14 +31,15 @@ logging.basicConfig(filename=log_file, level=logging.INFO,
 
 
 
-# New version with filename pattern
+# file format with ddmmyyyy, name, and the extension.
 VALID_PATTERN = re.compile(r"^\d{8}_[a-z0-9\-]+\.(pdf|csv|png|jpg|docx|txt)$")
 
+# quick check for file format, and used in process function.
 def validate(filename):
     return bool(VALID_PATTERN.match(filename))
 
 
-
+# main processing function that checks files, moves them, and logs actions. Returns counts for report generation.
 def process():
     files = [f for f in os.listdir(INPUT) if os.path.isfile(os.path.join(INPUT, f))]
     processed, quarantined, archived = 0, 0, 0
@@ -46,11 +47,11 @@ def process():
     for f in files:
         src = os.path.join(INPUT, f)
 
-        if validate(f):
+        if validate(f): # if file is valid, check year and move accordingly.
             date_part = f.split("_")[0]
             year = int(date_part[4:])
 
-            if year < 2000:
+            if year < 2000: # if year is less than 2000, move to archive.
                 #shutil.move(src, os.path.join(ARCHIVE, f))
                 dest_path = get_unique_path(os.path.join(ARCHIVE, f))
                 shutil.move(src, dest_path)
