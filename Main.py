@@ -1,22 +1,20 @@
+import json
 import os, shutil, re, logging
 from datetime import datetime
 
-# --- Config ---
-INPUT = "input"
-PROCESSED = "processed"
-QUARANTINE = "quarantine"
-ARCHIVE = "archive"
 
-LOG_DIR = "logs"
 
-FOLDERS = {
-    "png": "processed/images",
-    "jpg": "processed/images",
-    "txt": "processed/meeting_notes",
-    "docx": "processed/meeting_notes",
-    "pdf": "processed/invoice",
-    "csv": "processed/exports",
-}
+
+with open("config.json", "r") as f:
+    config = json.load(f)
+
+INPUT = config["input"]
+PROCESSED = config["processed"]
+QUARANTINE = config["quarantine"]
+ARCHIVE = config["archive"]
+LOG_DIR = config["log_dir"]
+
+FOLDERS = config["folders"]
 
 os.makedirs(PROCESSED, exist_ok=True)
 os.makedirs(QUARANTINE, exist_ok=True)

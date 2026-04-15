@@ -58,3 +58,27 @@
 
 #old verison for file format checking
 # VALID_PATTERN = re.compile(r"^\d{8}_[a-z]+_[a-z0-9\-]+\.(pdf|csv|png|jpg|docx|txt)$")
+
+
+
+
+# --- Config ---
+# INPUT = "input"
+# PROCESSED = "processed"
+# QUARANTINE = "quarantine"
+# ARCHIVE = "archive"
+# LOG_DIR = "logs"
+
+# FOLDERS = {
+#     "png": "processed/images",
+#     "jpg": "processed/images",
+#     "txt": "processed/meeting_notes",
+#     "docx": "processed/meeting_notes",
+#     "pdf": "processed/invoice",
+#     "csv": "processed/exports",
+# }
+
+
+# with open("config.json", "r") as f:
+#     content = f.read()
+#     print(content)

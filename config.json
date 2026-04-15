@@ -1,0 +1,16 @@
+{
+  "input": "input",
+  "processed": "processed",
+  "quarantine": "quarantine",
+  "archive": "archive",
+  "log_dir": "logs",
+  
+  "folders": {
+    "png": "processed/images",
+    "jpg": "processed/images",
+    "txt": "processed/meeting_notes",
+    "docx": "processed/meeting_notes",
+    "pdf": "processed/invoice",
+    "csv": "processed/exports"
+  }
+}
