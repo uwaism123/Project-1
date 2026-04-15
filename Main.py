@@ -1,5 +1,6 @@
 import json
 import os, shutil, re, logging
+#from functions import get_unique_path
 from datetime import datetime
 
 
@@ -50,7 +51,9 @@ def process():
             year = int(date_part[4:])
 
             if year < 2000:
-                shutil.move(src, os.path.join(ARCHIVE, f))
+                #shutil.move(src, os.path.join(ARCHIVE, f))
+                dest_path = get_unique_path(os.path.join(ARCHIVE, f))
+                shutil.move(src, dest_path)
                 logging.info(f"ARCHIVE (<2000) → archive: {f}")
                 archived += 1
                 continue
@@ -58,12 +61,16 @@ def process():
             ext = f.split(".")[-1].lower()
             dest_folder = FOLDERS.get(ext, PROCESSED)
 
-            shutil.move(src, os.path.join(dest_folder, f))
+            #shutil.move(src, os.path.join(dest_folder, f))
+            dest_path = get_unique_path(os.path.join(dest_folder, f))
+            shutil.move(src, dest_path)
             logging.info(f"{ext.upper()} → {dest_folder}: {f}")
             processed += 1
 
         else:
-            shutil.move(src, os.path.join(QUARANTINE, f))
+            #shutil.move(src, os.path.join(QUARANTINE, f))
+            dest_path = get_unique_path(os.path.join(QUARANTINE, f))
+            shutil.move(src, dest_path)
             logging.warning(f"INVALID → quarantine: {f}")
             quarantined += 1
 
@@ -112,3 +119,5 @@ def clear_folders():
 
                 if os.path.isfile(file_path):
                     os.remove(file_path)
+
+#clear_folders()
