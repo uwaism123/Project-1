@@ -40,64 +40,99 @@ def validate(filename):
     return bool(VALID_PATTERN.match(filename))
 
 
+# def process():
+#     files = [f for f in os.listdir(INPUT) if os.path.isfile(os.path.join(INPUT, f))]
+#     valid, invalid = 0, 0
+
+#     for f in files:
+#         src = os.path.join(INPUT, f)
+
+#         if validate(f):
+#             # --- Extract year from DDMMYYYY ---
+#             date_part = f.split("_")[0]
+#             year = int(date_part[4:])
+
+#             # --- Archive if older than 2000 ---
+#             if year < 2000:
+#                 shutil.move(src, os.path.join(ARCHIVE, f))
+#                 logging.info(f"ARCHIVE (<2000) → archive: {f}")
+#                 valid += 1
+#                 continue  # skip rest
+
+#             ext = f.split(".")[-1].lower()
+
+#             # Get destination folder (default to PROCESSED if not listed)
+#             dest_folder = FOLDERS.get(ext, PROCESSED)
+
+#             shutil.move(src, os.path.join(dest_folder, f))
+#             logging.info(f"{ext.upper()} → {dest_folder}: {f}")
+#             valid += 1
+
+#         else:
+#             shutil.move(src, os.path.join(QUARANTINE, f))
+#             logging.warning(f"INVALID → quarantine: {f}")
+#             invalid += 1
+
+#     print(f"\n✅ Processed: {valid} | ❌ Quarantined: {invalid}")
+#     print(f"📄 Log: {log_file}")
 def process():
     files = [f for f in os.listdir(INPUT) if os.path.isfile(os.path.join(INPUT, f))]
-    valid, invalid = 0, 0
+    processed, quarantined, archived = 0, 0, 0
 
     for f in files:
         src = os.path.join(INPUT, f)
 
         if validate(f):
-            # --- Extract year from DDMMYYYY ---
             date_part = f.split("_")[0]
             year = int(date_part[4:])
 
-            # --- Archive if older than 2000 ---
             if year < 2000:
                 shutil.move(src, os.path.join(ARCHIVE, f))
                 logging.info(f"ARCHIVE (<2000) → archive: {f}")
-                valid += 1
-                continue  # skip rest
+                archived += 1
+                continue
 
             ext = f.split(".")[-1].lower()
-
-            # Get destination folder (default to PROCESSED if not listed)
             dest_folder = FOLDERS.get(ext, PROCESSED)
 
             shutil.move(src, os.path.join(dest_folder, f))
             logging.info(f"{ext.upper()} → {dest_folder}: {f}")
-            valid += 1
+            processed += 1
 
         else:
             shutil.move(src, os.path.join(QUARANTINE, f))
             logging.warning(f"INVALID → quarantine: {f}")
-            invalid += 1
+            quarantined += 1
 
-    print(f"\n✅ Processed: {valid} | ❌ Quarantined: {invalid}")
-    print(f"📄 Log: {log_file}")
+    return processed, quarantined, archived
 
-# def generate_report(processed, quarantined, archived):
-#     report_file = os.path.join(LOG_DIR, f"summary_{datetime.now():%Y%m%d_%H%M%S}.txt")
 
-#     total = processed + quarantined + archived
+def generate_report(processed, quarantined, archived):
+    report_file = os.path.join(LOG_DIR, f"summary_{datetime.now():%Y%m%d_%H%M%S}.txt")
 
-#     with open(report_file, "w") as r:
-#         r.write("FILE PROCESSING SUMMARY\n")
-#         r.write("========================\n\n")
-#         r.write(f"Processed files   : {processed}\n")
-#         r.write(f"Archived files    : {archived}\n")
-#         r.write(f"Quarantined files : {quarantined}\n")
-#         r.write(f"Total files       : {total}\n\n")
-#         r.write(f"Log file          : {log_file}\n")
+    total = processed + quarantined + archived
+    now = datetime.now().strftime("%d-%m-%Y %H:%M:%S")
 
-#     print("\n📊 SUMMARY REPORT")
-#     print("========================")
-#     print(f"Processed   : {processed}")
-#     print(f"Archived    : {archived}")
-#     print(f"Quarantined : {quarantined}")
-#     print(f"Total       : {total}")
-#     print(f"📄 Report: {report_file}")
+    with open(report_file, "w") as r:
+        r.write("FILE PROCESSING SUMMARY\n")
+        r.write("========================\n\n")
+        r.write(f"Generated at     : {now}\n\n")
+        r.write(f"Processed files   : {processed}\n")
+        r.write(f"Archived files    : {archived}\n")
+        r.write(f"Quarantined files : {quarantined}\n")
+        r.write(f"Total files       : {total}\n\n")
+        r.write(f"Log file          : {log_file}\n")
+
+    print("\n📊 SUMMARY REPORT")
+    print("========================")
+    print(f"Generated at : {now}")
+    print(f"Processed   : {processed}")
+    print(f"Archived    : {archived}")
+    print(f"Quarantined : {quarantined}")
+    print(f"Total       : {total}")
+    print(f"📄 Report: {report_file}")
 
 if __name__ == "__main__":
-    process()
-    #generate_report(processed, quarantined, archived)
+    #process()
+    processed, quarantined, archived = process()
+    generate_report(processed, quarantined, archived)
