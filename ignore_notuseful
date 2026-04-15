@@ -1,0 +1,18 @@
+# def process():
+#     files = [f for f in os.listdir(INPUT) if os.path.isfile(os.path.join(INPUT, f))]
+#     valid, invalid = 0, 0
+#     for f in files:
+#         src = os.path.join(INPUT, f)
+#         if validate(f):
+#             shutil.move(src, os.path.join(PROCESSED, f))
+#             logging.info(f"VALID → processed: {f}")
+#             valid += 1
+#         else:
+#             shutil.move(src, os.path.join(QUARANTINE, f))
+#             logging.warning(f"INVALID → quarantine: {f}")
+#             invalid += 1
+#     print(f"\n✅ Processed: {valid} | ❌ Quarantined: {invalid}")
+#     print(f"📄 Log: {log_file}")
+
+#old verison for file format checking
+# VALID_PATTERN = re.compile(r"^\d{8}_[a-z]+_[a-z0-9\-]+\.(pdf|csv|png|jpg|docx|txt)$")
