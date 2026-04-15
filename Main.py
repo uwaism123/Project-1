@@ -3,11 +3,10 @@ import os, shutil, re, logging
 from datetime import datetime
 
 
-
-
 with open("config.json", "r") as f:
     config = json.load(f)
 
+# --- Config --- Takes from config.json and converts to variables
 INPUT = config["input"]
 PROCESSED = config["processed"]
 QUARANTINE = config["quarantine"]
