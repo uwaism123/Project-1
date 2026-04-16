@@ -11,14 +11,14 @@ The project is fully containerised using Docker for portability and consistent e
 - File validation using regex rules
 - Automatic routing by file type:
   - Images → processed/images
-    - PDFs → processed/invoice
-      - Text/Docs → processed/meeting_notes
-        - CSV → processed/exports
-        - Quarantine system for invalid filenames- Archive system for files older than year 2000
-        - Summary report generation (processed, quarantined, archived)
-        - Logging system for traceability
-        - Dockerised execution
-        - Host folder mounting for persistence
+  - PDFs → processed/invoice
+  - Text/Docs → processed/meeting_notes
+  - CSV → processed/exports
+- Quarantine system for invalid filenames- Archive system for files older than year 2000
+- Summary report generation (processed, quarantined, archived)
+- Logging system for traceability
+- Dockerised execution
+- Host folder mounting for persistence
 
         ---
 
@@ -42,5 +42,14 @@ The project is fully containerised using Docker for portability and consistent e
         ├── backup_reports.bat├──│
         └── README.md
 
-        To run the Docker in terminal enter: 
-        - .\run_file.bat
+
+
+To run in git bash 
+- have docker desktop open and download repo 
+- in git bash cd "folder path"
+- docker build -t project_1 .
+- MSYS_NO_PATHCONV=1 docker run -v "${PWD}:/app" project_1
+- should run and work.
+
+To run the Docker in terminal enter: 
+- .\run_file.bat

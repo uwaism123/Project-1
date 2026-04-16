@@ -1,11 +1,3 @@
-PS C:\Users\Admin\OneDrive - Alexander Mann Solutions\Documents\Project 1> .\run_file.bat
-
-📊 SUMMARY REPORT
-========================
-Generated at : 16-04-2026 10:05:46
-Processed   : 0
-Archived    : 0
-Quarantined : 0
-Total       : 0
-📄 Report: logs/summary_20260416_100546.txt
-PS C:\Users\Admin\OneDrive - Alexander Mann Solutions\Documents\Project 1> 
+@echo off
+set "DIR=%cd%"
+docker run -v "%DIR%:/app" project_1

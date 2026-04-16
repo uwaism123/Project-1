@@ -82,3 +82,6 @@
 # with open("config.json", "r") as f:
 #     content = f.read()
 #     print(content)
+
+# logging.basicConfig(filename=log_file, level=logging.INFO,
+#                     format="%(asctime)s %(levelname)s %(message)s")

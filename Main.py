@@ -26,8 +26,12 @@ for folder in set(FOLDERS.values()):
 
 # --- Logging ---
 log_file = os.path.join(LOG_DIR, f"fileflow_{datetime.now():%Y%m%d_%H%M%S}.log")
-logging.basicConfig(filename=log_file, level=logging.INFO,
-                    format="%(asctime)s %(levelname)s %(message)s")
+logging.basicConfig(
+        filename=log_file,
+            level=logging.INFO,
+                format="%(asctime)s | %(levelname)s | %(message)s"
+                )
+
 
 
 
