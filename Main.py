@@ -16,6 +16,7 @@ LOG_DIR = config["log_dir"]
 
 FOLDERS = config["folders"]
 
+# --- Setup --- Create necessary folders if they don't exist.
 os.makedirs(PROCESSED, exist_ok=True)
 os.makedirs(QUARANTINE, exist_ok=True)
 os.makedirs(LOG_DIR, exist_ok=True)
@@ -24,7 +25,7 @@ os.makedirs(ARCHIVE, exist_ok=True)
 for folder in set(FOLDERS.values()):
     os.makedirs(folder, exist_ok=True)
 
-# --- Logging ---
+# --- Logging --- Time, folder, info and file name in log file.
 log_file = os.path.join(LOG_DIR, f"fileflow_{datetime.now():%Y%m%d_%H%M%S}.log")
 logging.basicConfig(
         filename=log_file,
@@ -61,19 +62,17 @@ def process():
                 shutil.move(src, dest_path)
                 logging.info(f"ARCHIVE (<2000) → archive: {f}")
                 archived += 1
-                continue
+                continue # skip further processing for archived files.
 
-            ext = f.split(".")[-1].lower()
+            ext = f.split(".")[-1].lower() # get file extension and determine destination folder.
             dest_folder = FOLDERS.get(ext, PROCESSED)
 
-            #shutil.move(src, os.path.join(dest_folder, f))
             dest_path = get_unique_path(os.path.join(dest_folder, f))
             shutil.move(src, dest_path)
             logging.info(f"{ext.upper()} → {dest_folder}: {f}")
             processed += 1
 
-        else:
-            #shutil.move(src, os.path.join(QUARANTINE, f))
+        else: # if file is invalid, move to quarantine.
             dest_path = get_unique_path(os.path.join(QUARANTINE, f))
             shutil.move(src, dest_path)
             logging.warning(f"INVALID → quarantine: {f}")
@@ -81,8 +80,8 @@ def process():
 
     return processed, quarantined, archived
 
-
-def generate_report(processed, quarantined, archived):
+# generates a summary report with counts of processed, quarantined, and archived files.
+def generate_report(processed, quarantined, archived): 
     report_file = os.path.join(LOG_DIR, f"summary_{datetime.now():%Y%m%d_%H%M%S}.txt")
 
     total = processed + quarantined + archived
@@ -107,13 +106,13 @@ def generate_report(processed, quarantined, archived):
     print(f"Total       : {total}")
     print(f"📄 Report: {report_file}")
 
+# --- Main execution ---
 if __name__ == "__main__":
-    #process()
-    processed, quarantined, archived = process()
+    processed, quarantined, archived = process() #
     generate_report(processed, quarantined, archived)
 
 
-
+# Testing function to clear all folders before running the main process.
 def clear_folders():
     folders_to_clear = set(FOLDERS.values())
 

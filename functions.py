@@ -1,5 +1,6 @@
 import os
 
+# Function to generate a unique file name if a file with the same name already exists in the destination folder.
 def get_unique_path(path):
     base, ext = os.path.splitext(path)
     counter = 1
