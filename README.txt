@@ -89,7 +89,7 @@ After processing:
 - Invalid files → `quarantine`
 - Old files → `archive`
 
-Summary reports are saved in `logs/` with timestamps.
+Summary reports and logs are saved in `logs/` with timestamps.
 
 ---
 
