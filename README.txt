@@ -46,6 +46,11 @@ Project 1/
 ## To run in git bash 
 - Have docker desktop open and download repo 
 - in git bash cd "folder path"
+- chmod +x run_project1.sh
+- chmod +x reset_demo_data.sh
+- chmod +x backup_reports.sh
+- Then to run: ./run_project1
+another way ..
 - docker build -t project_1 .
 - MSYS_NO_PATHCONV=1 docker run -v "${PWD}:/app" project_1
 - should run and work.
